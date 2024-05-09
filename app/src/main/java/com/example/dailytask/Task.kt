@@ -13,5 +13,9 @@ class Task{
         this.date=date
         this.category=category
     }
+    constructor(){
+
+    }
+
 
 }

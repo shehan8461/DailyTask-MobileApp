@@ -17,7 +17,13 @@ class TaskViews : AppCompatActivity() {
         val taskdescription=findViewById<TextView>(R.id.taskdes)
         val date=findViewById<TextView>(R.id.date)
         val category=findViewById<TextView>(R.id.category)
+
+        val getreadbtn=findViewById<Button>(R.id.readbtn)
+        val getreadddetailsview=findViewById<TextView>(R.id.results)
         val context=this
+        var db=DataBaseHandler(context)
+
+
         submit_btn.setOnClickListener({
             if(taskname.text.toString().length>0&&
                 taskdescription.text.toString().length>0){
@@ -28,6 +34,15 @@ class TaskViews : AppCompatActivity() {
 
             }else{
                 Toast.makeText(context,"please fill all data's", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+        getreadbtn.setOnClickListener({
+                    var data=db.readdata()
+                    getreadddetailsview.text=""
+            for(i in 0..(data.size-1)){
+                getreadddetailsview.append(data.get(i).id.toString()+" "+data.get(i).taskname+" "+data.get(i).taskdes+" "+data.get(i).date+data.get(i).category+" ")
             }
         })
 

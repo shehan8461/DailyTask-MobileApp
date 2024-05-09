@@ -53,4 +53,25 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
             db.close()
         }
     }
+fun readdata():MutableList<Task>{
+    var list:MutableList<Task> =ArrayList()
+
+    val db=this.readableDatabase
+    val query= "Select * from " + TABLE_NAME
+    val result=db.rawQuery(query,null)
+    if(result.moveToFirst()){
+        do{
+           var task=Task()
+            task.id=result.getString(result.getColumnIndex(COL_ID)).toInt()
+            task.taskname=result.getString(result.getColumnIndex(COL_NAME))
+            task.taskdes=result.getString(result.getColumnIndex(COL_DESCRIPTION))
+            task.date=result.getString(result.getColumnIndex(COL_DATE))
+            task.category=result.getString(result.getColumnIndex(COL_CATEGORY))
+            list.add(task)
+        }while(result.moveToNext())
+    }
+    result.close()
+    db.close()
+    return list
+}
 }
