@@ -74,4 +74,36 @@ fun readdata():MutableList<Task>{
     db.close()
     return list
 }
+fun deleteData(){
+    val db=this.writableDatabase
+
+    db.delete(TABLE_NAME, null,null)
+    db.close()
+}
+
+
+    fun updatedata(task: Task) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+
+        cv.put(COL_NAME, task.taskname)
+        cv.put(COL_DESCRIPTION, task.taskdes)
+        cv.put(COL_DATE, task.date)
+        cv.put(COL_CATEGORY, task.category)
+
+        try {
+            val result = db.update(TABLE_NAME, cv, "$COL_ID=?", arrayOf(task.id.toString()))
+            if (result > 0) {
+                Toast.makeText(context, "Data updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Failed to update data", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+        } finally {
+            db.close()
+        }
+    }
+
+
 }

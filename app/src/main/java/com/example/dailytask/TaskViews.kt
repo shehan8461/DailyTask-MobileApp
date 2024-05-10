@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import org.w3c.dom.Text
+
 
 class TaskViews : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +23,8 @@ class TaskViews : AppCompatActivity() {
         val context=this
         var db=DataBaseHandler(context)
 
+        val getdeletebtn=findViewById<Button>(R.id.deletebtn)
+        val getupdatebtn=findViewById<Button>(R.id.updatebtn)
 
         submit_btn.setOnClickListener({
             if(taskname.text.toString().length>0&&
@@ -42,9 +44,41 @@ class TaskViews : AppCompatActivity() {
                     var data=db.readdata()
                     getreadddetailsview.text=""
             for(i in 0..(data.size-1)){
-                getreadddetailsview.append(data.get(i).id.toString()+" "+data.get(i).taskname+" "+data.get(i).taskdes+" "+data.get(i).date+data.get(i).category+" ")
+                getreadddetailsview.append(data.get(i).id.toString()+" "+data.get(i).taskname+" "+data.get(i).taskdes+" "+data.get(i).date+" "+data.get(i).category+" "+"\n")
             }
         })
 
+        getupdatebtn.setOnClickListener {
+            if (taskname.text.isNotBlank() && taskdescription.text.isNotBlank() &&
+                date.text.isNotBlank() && category.text.isNotBlank()
+            ) {
+                val taskId = // Get the task ID from wherever it's stored or passed
+                    if (taskId != null) {
+                        val task = Task(
+                            taskId,
+                            taskname.text.toString(),
+                            taskdescription.text.toString(),
+                            date.text.toString(),
+                            category.text.toString()
+                        )
+                        db.updatedata(task)
+                        getreadbtn.performClick()
+                    } else {
+                        Toast.makeText(context, "Task ID is null", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Please fill all data", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+
+        getdeletebtn.setOnClickListener({
+            db.deleteData()
+            getreadbtn.performClick()
+        })
     }
+
+
 }

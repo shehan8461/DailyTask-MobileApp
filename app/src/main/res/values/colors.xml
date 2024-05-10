@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="submitbuttoncolous">#E877B1</color>
+    <color name="readbuttoncolous">#009688</color>
+    <color name="updatebuttoncolous">#2196F3</color>
+    <color name="deletebuttoncolous">#F61111</color>
 </resources>
