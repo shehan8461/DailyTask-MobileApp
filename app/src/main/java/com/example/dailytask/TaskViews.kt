@@ -1,5 +1,6 @@
 package com.example.dailytask
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -19,7 +20,7 @@ class TaskViews : AppCompatActivity() {
         val category=findViewById<TextView>(R.id.category)
 
         val getreadbtn=findViewById<Button>(R.id.readbtn)
-        val getreadddetailsview=findViewById<TextView>(R.id.results)
+        val getreadddetailsview=findViewById<TextView>(R.id.result)
         val context=this
         var db=DataBaseHandler(context)
 
@@ -46,6 +47,8 @@ class TaskViews : AppCompatActivity() {
             for(i in 0..(data.size-1)){
                 getreadddetailsview.append(data.get(i).id.toString()+" "+data.get(i).taskname+" "+data.get(i).taskdes+" "+data.get(i).date+" "+data.get(i).category+" "+"\n")
             }
+            val intent=Intent(this,MainActivity::class.java)
+            startActivity(intent)
         })
 
         getupdatebtn.setOnClickListener {
